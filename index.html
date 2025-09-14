@@ -4,9 +4,53 @@
 <head>
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+
+  <title>FootGG</title>
+  <link rel="stylesheet" href="style/sidebar.css">
+  <link rel="stylesheet" href="style/header.css">
+  <link rel="stylesheet" href="style/main.css">
 </head>
 
 <body>
+    <!-- Header fijo -->
+    <header class="header">
+        <div class="header-content">
+            <h1 class="logo">FootGG</h1>
+            <div class="soccer-ball">⚽</div>
+        </div>
+    </header>
+
+    <aside class="sidebar">
+        <nav class="sidebar-nav">
+            <button class="nav-button active" data-section="camera">CAMERA</button>
+            <button class="nav-button" data-section="trivia">TRIVIA</button>
+            <button class="nav-button" data-section="video">VIDEO</button>
+            <button class="nav-button" data-section="statistic">STATISTIC</button>
+        </nav>
+    </aside>
+
+    <main>
+        <section class="section camera-section active" id="camera-section">
+            <h2>Camera Section</h2>
+            <p>Contenido de la sección Camera.</p>
+        </section>
+
+        <section class="section trivia-section" id="trivia-section" style="display: none;">
+            <h2>Trivia Section</h2>
+            <p>Contenido de la sección Trivia.</p>
+        </section>
+        <section class="section video-section" id="video-section" style="display: none;">
+            <h2>Video Section</h2>
+            <p>Contenido de la sección Video.</p>
+        </section>
+        <section class="section statistic-section" id="statistic-section" style="display: none;">
+            <h2>Statistic Section</h2>
+            <p>Contenido de la sección Statistic.</p>
+        </section>
+
+    </main>
+
+
   <a-scene mindar-image="imageTargetSrc: targets/mexico.mind;" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
     <a-assets>
       <img id="card" src="si.png" />

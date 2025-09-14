@@ -2,12 +2,12 @@
 <html lang="en">
 
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
   <title>FootGG</title>
-  <link rel="stylesheet" href="style/sidebar.css">
-  <link rel="stylesheet" href="style/header.css">
   <link rel="stylesheet" href="style/main.css">
 </head>
 
@@ -20,6 +20,7 @@
         </div>
     </header>
 
+    <!-- Sidebar -->
     <aside class="sidebar">
         <nav class="sidebar-nav">
             <button class="nav-button active" data-section="camera">CAMERA</button>
@@ -29,43 +30,76 @@
         </nav>
     </aside>
 
-    <main>
+    <!-- Contenido principal -->
+    <div class="main-container">
+        <!-- Sección de Cámara -->
         <section class="section camera-section active" id="camera-section">
-            <h2>Camera Section</h2>
-            <p>Contenido de la sección Camera.</p>
+            <h2 class="camera-title">🎯 REALIDAD AUMENTADA</h2>
+
+            <div class="ar-container">
+                <div class="status-indicator" id="arStatus">Presiona Iniciar</div>
+                <div class="ar-scene" id="arScene">
+                    <!-- La escena AR se insertará aquí dinámicamente -->
+                </div>
+            </div>
+
+            <div class="camera-controls">
+                <button class="btn" id="startArBtn">🚀 Iniciar Cámara</button>
+                <button class="btn" id="stopArBtn" disabled>⏹️ Detener</button>
+                <button class="btn" id="resetArBtn">🔄 Reiniciar</button>
+            </div>
         </section>
 
-        <section class="section trivia-section" id="trivia-section" style="display: none;">
-            <h2>Trivia Section</h2>
-            <p>Contenido de la sección Trivia.</p>
-        </section>
-        <section class="section video-section" id="video-section" style="display: none;">
-            <h2>Video Section</h2>
-            <p>Contenido de la sección Video.</p>
-        </section>
-        <section class="section statistic-section" id="statistic-section" style="display: none;">
-            <h2>Statistic Section</h2>
-            <p>Contenido de la sección Statistic.</p>
+        <!-- Sección de Trivia -->
+        <section class="section trivia-section" id="trivia-section">
+            <h2>🧠 Trivia Mundial</h2>
+            <p>¡Próximamente! Pon a prueba tus conocimientos sobre los mundiales de fútbol.</p>
         </section>
 
-    </main>
+        <!-- Sección de Video -->
+        <section class="section video-section" id="video-section">
+            <h2>🎬 Videos</h2>
+            <p>¡Próximamente! Los mejores momentos de los mundiales.</p>
+        </section>
 
+        <!-- Sección de Estadísticas -->
+        <section class="section statistic-section" id="statistic-section">
+            <h2>📊 Estadísticas</h2>
+            <p>¡Próximamente! Datos y estadísticas fascinantes de los mundiales.</p>
+        </section>
+    </div>
 
-  <a-scene mindar-image="imageTargetSrc: targets/mexico.mind;" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
-    <a-assets>
-      <img id="card" src="si.png" />
-      <a-asset-item id="avatarModel" src="3d/piramide.glb"></a-asset-item>
-    </a-assets>
+    <!-- Panel de Debug (solo para desarrollo) -->
+    <div class="debug-panel" id="debugPanel">
+        <h4>🔧 Debug Info</h4>
+        <div class="debug-item" id="debugStatus">Estado: Inicializado</div>
+        <div class="debug-item" id="debugAssets">Assets: Verificando...</div>
+        <div class="debug-item" id="debugScene">Escena: No iniciada</div>
+        <div class="debug-item" id="debugTarget">Objetivo: No detectado</div>
+    </div>
 
-    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+    <!-- Scripts -->
+    <script src="app.js"></script>
+    
+    <!-- Debug toggle (quitar en producción) -->
+    <script>
+        // Mostrar/ocultar panel de debug con Ctrl+D
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'd') {
+                e.preventDefault();
+                const debugPanel = document.getElementById('debugPanel');
+                debugPanel.classList.toggle('active');
+            }
+        });
 
-    <a-entity mindar-image-target="targetIndex: 0">
-      <a-plane src="#card" position="0 0 0" height="0.552" width="1" rotation="0 0 0"></a-plane>
-      <a-gltf-model rotation="0 0 0 " position="0 0 0.1" scale="0.1 0.1 0.1" src="#avatarModel"
-        animation="property: position; to: 0 0.1 0.1; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"
-      >
-    </a-entity>
-  </a-scene>
+        // Actualizar debug info
+        window.updateDebugInfo = (type, message) => {
+            const debugElement = document.getElementById(`debug${type.charAt(0).toUpperCase() + type.slice(1)}`);
+            if (debugElement) {
+                debugElement.textContent = `${type.charAt(0).toUpperCase() + type.slice(1)}: ${message}`;
+            }
+        };
+    </script>
 </body>
 
 </html>

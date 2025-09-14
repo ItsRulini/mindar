@@ -12,31 +12,207 @@ body {
     overflow-x: hidden;
 }
 
+/* Header fijo */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(135deg, #00ff88, #00cc6a);
+    z-index: 1000;
+    box-shadow: 0 2px 15px rgba(0, 255, 136, 0.3);
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.logo {
+    font-size: 32px;
+    font-weight: bold;
+    color: #000;
+    letter-spacing: 2px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.soccer-ball {
+    position: absolute;
+    right: 20px;
+    font-size: 28px;
+    animation: rotate 3s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Sidebar fijo */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 80px;
+    width: 200px;
+    height: calc(100vh - 80px);
+    background-color: #1a1a1a;
+    border-right: 2px solid #00ff88;
+    overflow-y: auto;
+    z-index: 999;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+}
+
+.nav-button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 20px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-left: 4px solid transparent;
+    margin: 5px 0;
+}
+
+.nav-button:hover {
+    background-color: rgba(0, 255, 136, 0.1);
+    border-left-color: #00ff88;
+    padding-left: 25px;
+}
+
+.nav-button.active {
+    background: linear-gradient(90deg, rgba(0, 255, 136, 0.2), transparent);
+    border-left-color: #00ff88;
+    color: #00ff88;
+    padding-left: 25px;
+}
+
 /* Contenedor principal */
 .main-container {
-    display: flex;
+    margin-left: 200px;
+    padding-top: 80px;
     min-height: 100vh;
-    padding-top: 80px; /* Espacio para el header fijo */
 }
 
 /* Secciones del contenido */
 .section {
     display: none;
     width: 100%;
-    height: 100%;
+    height: calc(100vh - 80px);
     padding: 20px;
+    position: relative;
 }
 
 .section.active {
     display: block;
 }
 
-/* Utilidades */
-.hidden {
-    display: none !important;
+/* Estilos específicos para la sección de cámara */
+.camera-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+    overflow-y: auto;
 }
 
-/* Botones generales */
+.camera-title {
+    font-size: 2.5rem;
+    color: #00ff88;
+    margin-bottom: 20px;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.camera-instructions {
+    background: rgba(26, 26, 26, 0.9);
+    border: 2px solid #00ff88;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    max-width: 600px;
+    text-align: center;
+}
+
+.camera-instructions h3 {
+    color: #00ff88;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.camera-instructions p {
+    color: #fff;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.camera-instructions p:last-child {
+    margin-bottom: 0;
+}
+
+/* Contenedor para la escena AR */
+.ar-container {
+    width: 100%;
+    max-width: 800px;
+    height: 500px;
+    border: 3px solid #00ff88;
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+    background: #000;
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+}
+
+.ar-scene {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #00ff88;
+    font-size: 1.1rem;
+}
+
+.ar-scene:empty::before {
+    content: "🎯 Presiona 'Iniciar Cámara' para comenzar";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    opacity: 0.7;
+}
+
+/* Botones de control */
+.camera-controls {
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 .btn {
     padding: 12px 24px;
     border: none;
@@ -47,6 +223,7 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
     font-size: 14px;
+    min-width: 120px;
 }
 
 .btn:hover {
@@ -58,14 +235,259 @@ body {
     transform: translateY(0);
 }
 
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    background: linear-gradient(45deg, #666, #555);
+}
+
+.btn:disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* Indicador de estado */
+.status-indicator {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #00ff88;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    z-index: 10;
+    border: 1px solid #00ff88;
+}
+
+.status-indicator.loading {
+    color: #ffa500;
+    border-color: #ffa500;
+    animation: pulse 1.5s infinite;
+}
+
+.status-indicator.error {
+    color: #ff4444;
+    border-color: #ff4444;
+    animation: shake 0.5s;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-5px);
+    }
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+/* Debug panel */
+.debug-panel {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.9);
+    border: 1px solid #00ff88;
+    border-radius: 10px;
+    padding: 15px;
+    max-width: 300px;
+    font-size: 12px;
+    color: #00ff88;
+    z-index: 1001;
+    display: none;
+}
+
+.debug-panel.active {
+    display: block;
+}
+
+.debug-panel h4 {
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.debug-panel .debug-item {
+    margin-bottom: 5px;
+    padding: 3px 0;
+    border-bottom: 1px solid rgba(0, 255, 136, 0.2);
+}
+
+.debug-panel .debug-item:last-child {
+    border-bottom: none;
+}
+
+/* Estilos para otras secciones */
+.trivia-section,
+.video-section,
+.statistic-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.trivia-section h2,
+.video-section h2,
+.statistic-section h2 {
+    color: #00ff88;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
 /* Responsive */
+@media (max-width: 1024px) {
+    .ar-container {
+        max-width: 100%;
+        height: 400px;
+    }
+
+    .camera-instructions {
+        max-width: 90%;
+    }
+}
+
 @media (max-width: 768px) {
+    .sidebar {
+        position: relative;
+        top: 0;
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 2px solid #00ff88;
+    }
+    
+    .sidebar-nav {
+        flex-direction: row;
+        padding: 10px 0;
+        overflow-x: auto;
+    }
+    
+    .nav-button {
+        min-width: 120px;
+        text-align: center;
+        font-size: 14px;
+        padding: 15px;
+        border-left: none;
+        border-bottom: 4px solid transparent;
+        white-space: nowrap;
+    }
+    
+    .nav-button:hover,
+    .nav-button.active {
+        padding-left: 15px;
+        border-left: none;
+        border-bottom-color: #00ff88;
+    }
+
     .main-container {
-        flex-direction: column;
+        margin-left: 0;
         padding-top: 60px;
     }
     
-    .section {
-        padding: 10px;
+    .header {
+        height: 60px;
     }
+    
+    .logo {
+        font-size: 24px;
+    }
+    
+    .soccer-ball {
+        font-size: 20px;
+        right: 15px;
+    }
+
+    .camera-title {
+        font-size: 2rem;
+    }
+
+    .ar-container {
+        height: 350px;
+        border-width: 2px;
+    }
+
+    .camera-instructions {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    .camera-controls {
+        margin: 15px;
+        gap: 10px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 12px;
+        min-width: 100px;
+    }
+
+    .section {
+        padding: 15px;
+        height: calc(100vh - 60px);
+    }
+}
+
+@media (max-width: 480px) {
+    .camera-title {
+        font-size: 1.5rem;
+    }
+
+    .ar-container {
+        height: 300px;
+    }
+
+    .camera-instructions h3 {
+        font-size: 1rem;
+    }
+
+    .camera-instructions p {
+        font-size: 14px;
+    }
+
+    .nav-button {
+        min-width: 100px;
+        font-size: 12px;
+        padding: 12px;
+    }
+
+    .debug-panel {
+        bottom: 10px;
+        right: 10px;
+        left: 10px;
+        max-width: none;
+    }
+}
+
+/* Utilidades */
+.hidden {
+    display: none !important;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
 }

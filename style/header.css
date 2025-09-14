@@ -1,0 +1,62 @@
+/* Header fijo */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(135deg, #00ff88, #00cc6a);
+    z-index: 1000;
+    box-shadow: 0 2px 15px rgba(0, 255, 136, 0.3);
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.logo {
+    font-size: 32px;
+    font-weight: bold;
+    color: #000;
+    letter-spacing: 2px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.soccer-ball {
+    position: absolute;
+    right: 20px;
+    font-size: 28px;
+    animation: rotate 3s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header {
+        height: 60px;
+    }
+    
+    .logo {
+        font-size: 24px;
+    }
+    
+    .soccer-ball {
+        font-size: 20px;
+        right: 15px;
+    }
+}

@@ -171,14 +171,15 @@ body {
 
 /* Contenedor para la escena AR */
 .ar-container {
+    margin: 0 0 10vh 0;
     width: 100%;
-    max-width: 800px;
+    /* max-width: 800px; */
     height: 500px;
     border: 3px solid #00ff88;
     border-radius: 15px;
     overflow: hidden;
     position: relative;
-    background: #000;
+    /* background: #000; */
     box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
 }
 
